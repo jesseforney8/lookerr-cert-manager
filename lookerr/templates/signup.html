@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title%} Sign Up {% endblock %}
+{% block body %}
+
+<div class="center">
+    <form method="POST">
+        <label>E-mail</label>
+        <input id="email_input" name="email_input">
+        <br>
+        <label>Password</label>
+        <input id="password_confirm1" name="password_confirm1">
+        <br>
+        <label>Confirm Password</label>
+        <input id="password_confirm2" name="password_confirm2" >
+        <br>
+        <button type="submit" class="btn btn-dark">Sign Up</button>
+        <br>
+        <p>Already have an account? <a href="/login">Log in here.</a></p>
+    </form>
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}
