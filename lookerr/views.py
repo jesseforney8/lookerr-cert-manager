@@ -9,3 +9,11 @@ views = Blueprint("views", __name__, url_prefix='/views')
 @login_required
 def home():
         return render_template("home.html", user=current_user)
+
+@views.route("/devices")
+@login_required
+def devices():
+
+
+
+        return render_template("devices.html", user=current_user)
