@@ -3,6 +3,8 @@
 
 {% block body %}
 
+
+
 <!-- Button trigger modal -->
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
     Add Device
@@ -73,9 +75,11 @@
     </div>
   </div>
 
-  
-
-
+<div>
+  {%for device in device_list%}
+    <p>{{device.name}} - {{device.ip_address}} - {{device.os}} - {{device.ip_address}} - {{device.device_user}} - {{device.filepath}} - {{device.ssl_cert}}</p>
+  {%endfor%}
+</div>
 
 
 

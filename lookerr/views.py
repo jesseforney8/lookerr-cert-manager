@@ -4,7 +4,7 @@ from flask import Flask, redirect, url_for, render_template, Blueprint, request,
 from werkzeug.security import generate_password_hash, check_password_hash
 
 def create_device(name, ip, os, device_user, device_pass, filepath, cert):
-        new_device = Device(name=name,ip_address=ip,os=os,device_user=device_user,device_paassword=device_pass,filepath=filepath,ssl_cert=cert)
+        new_device = Device(name=name,ip_address=ip,os=os,device_user=device_user,device_password=device_pass,filepath=filepath,ssl_cert=cert)
         db.session.add(new_device)
         db.session.commit()
      
@@ -32,6 +32,9 @@ def devices():
                 
                 create_device(device_name, device_ip, device_os, server_user, server_pass, filepath, device_cert)
 
+        
+        device_list = db.session.query(Device).all()
+        
                 
 
-        return render_template("devices.html", user=current_user)
+        return render_template("devices.html", user=current_user, device_list=device_list)
