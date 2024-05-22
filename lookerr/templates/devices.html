@@ -26,7 +26,7 @@
           <p1>Device Operating System</p1><br>
   
           <div class="form-check">
-            <input class="form-check-input" type="radio" name="flexRadioDefault" id="Windows" value="Windows" checked>
+            <input class="form-check-input" type="radio" name="flexRadioDefault" id="Windows" value="Windows">
             <label class="form-check-label" for="flexRadioDefault1">
               Windows
             </label>
@@ -38,26 +38,15 @@
             </label>
           </div>
 
-
-
-
-          
-
-
-
-
-
-
           <p1>Login Credintials</p1><br>
-          <form method="POST">
-            <p>Username</p>
-            <input id="server_user"><br>
-            <p>Password</p>
-            <input id="server_password"><br>
-          </form>
-          <p>Filepath</p>
+          <label>Username</label><br>
+          <input id="server_user"><br>
+          <label>Password</label><br>
+          <input id="server_password"><br>
+          <br>
+          <label>Filepath</label><br>
           <input id="filepath"><br>
-          <p>SSL Certificate</p><br>
+          <label>SSL Certificate</label>
           <div class="input-group mb-3">
             <input type="file" class="form-control" id="inputGroupFile01">
           </div>
@@ -87,10 +76,16 @@
     </div>
   </div>
 
+
+
+
+  
+
 <div>
   {%for device in device_list%}
-    <p>{{device.name}} - {{device.ip_address}} - {{device.os}} - {{device.ip_address}} - {{device.device_user}} - {{device.filepath}} - {{device.ssl_cert}}</p>
-  {%endfor%}
+    <p>{{device.name}} - {{device.ip_address}} - {{device.os}} - {{device.device_user}} - {{device.filepath}} - {{device.ssl_cert}} <button type="button" class="btn btn-secondary">Push Cert</button> <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">View</button> <img src="/static/red_x20.png">Cert not in sync </p>
+  
+    {%endfor%}
 </div>
 
 
