@@ -21,16 +21,18 @@ def home():
 def devices():
 
         if request.method == "POST":
-                device = json.loads(request.data)
-                device_name = device["name"]
-                device_ip = device["ip"]
-                device_os = device["os"]
-                server_user = device["server_user"]
-                server_pass = device["server_pass"]
-                filepath = device["file_path"]
-                device_cert = device["device_cert"]
+                device_name = request.form.get("device_name")
+                device_ip = request.form.get("device_ip")
+                device_os = "windows"
+                server_user = request.form.get("server_user")
+                server_pass  = request.form.get("server_password")
+                filepath = request.form.get("filepath")
+                device_cert = "dummy"
+        
                 
                 create_device(device_name, device_ip, device_os, server_user, server_pass, filepath, device_cert)
+
+                return redirect("/devices")
 
         
         device_list = db.session.query(Device).all()

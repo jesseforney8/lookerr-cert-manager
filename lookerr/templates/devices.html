@@ -18,59 +18,62 @@
           <h1 class="modal-title fs-5" id="exampleModalLabel">Add Device</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-body">
-          <p1>Device Name</p1><br>
-          <input id="device_name" name="device_name"><br>
-          <p1>Device IP Address</p1><br>
-          <input id="device_ip" name="device_ip"><br>
-          <p1>Device Operating System</p1><br>
-  
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="flexRadioDefault" id="Windows" value="Windows">
-            <label class="form-check-label" for="flexRadioDefault1">
-              Windows
-            </label>
+        <form method="post" enctype=multipart/form-data>
+          <div class="modal-body">
+            <p1>Device Name</p1><br>
+            <input id="device_name" name="device_name"><br>
+            <p1>Device IP Address</p1><br>
+            <input id="device_ip" name="device_ip"><br>
+            <p1>Device Operating System</p1><br>
+    
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="flexRadioDefault" id="Windows" value="Windows">
+              <label class="form-check-label" for="flexRadioDefault1">
+                Windows
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="flexRadioDefault" id="Linux" value="Linux">
+              <label class="form-check-label" for="flexRadioDefault2">
+                Linux
+              </label>
+            </div>
+
+            <p1>Login Credintials</p1><br>
+            <label>Username</label><br>
+            <input id="server_user" name="server_user"><br>
+            <label>Password</label><br>
+            <input id="server_password" name="server_password"><br>
+            <br>
+            <label>Filepath</label><br>
+            <input id="filepath" name="filepath"><br>
+            <label>SSL Certificate</label>
+            <div class="input-group mb-3">
+              <input type="file" class="form-control" id="inputGroupFile01">
+            </div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
           </div>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="flexRadioDefault" id="Linux" value="Linux">
-            <label class="form-check-label" for="flexRadioDefault2">
-              Linux
-            </label>
-          </div>
-
-          <p1>Login Credintials</p1><br>
-          <label>Username</label><br>
-          <input id="server_user"><br>
-          <label>Password</label><br>
-          <input id="server_password"><br>
-          <br>
-          <label>Filepath</label><br>
-          <input id="filepath"><br>
-          <label>SSL Certificate</label>
-          <div class="input-group mb-3">
-            <input type="file" class="form-control" id="inputGroupFile01">
-          </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" onclick=add_devices()>Save changes</button>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Save changes</button>
+        </form> 
         </div>
       </div>
     </div>
