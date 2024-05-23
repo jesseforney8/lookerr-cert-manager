@@ -1,26 +1,29 @@
-function add_devices(){
-    let device_name = document.getElementById("device_name").value;
-    let device_ip = document.getElementById("device_ip").value;
-    let server_user = document.getElementById("server_user").value;
-    let server_pass = document.getElementById("server_password").value;
-    let filepath = document.getElementById("filepath").value;
+function update_devices(device_id){
+        
+    let device_name = document.getElementById("device_name_update" + device_id).value;
+    let device_ip = document.getElementById("device_ip_update"+ device_id).value;
+    let server_user = document.getElementById("server_user_update"+ device_id).value;
+    let server_pass = document.getElementById("server_password_update"+ device_id).value;
+    let filepath = document.getElementById("filepath_update"+ device_id).value;
+    console.log(device_id)
 
-    if (document.getElementById("Windows").checked) {
-        var os = document.getElementById("Windows").value;
+
+    if (document.getElementById("Windows_update"+ device_id).checked) {
+        var os = document.getElementById("Windows_update"+ device_id).value;
 
 
     } else {
-        var os = document.getElementById("Linux").value;
+        var os = document.getElementById("Linux_update"+ device_id).value;
 
 
     };
     
     
-    console.log(os)
+    
 
-    fetch("/devices", {
+    fetch("/devices-update", {
               method: "POST",
-              body: JSON.stringify({name: device_name, ip: device_ip, os: os, server_user: server_user, server_pass: server_pass, file_path: filepath, device_cert: "dummy"}),
+              body: JSON.stringify({id: device_id, name: device_name, ip: device_ip, os: os, server_user: server_user, server_pass: server_pass, file_path: filepath}),
             }).then((_res) => {
                 window.location.href = "/devices";
             });

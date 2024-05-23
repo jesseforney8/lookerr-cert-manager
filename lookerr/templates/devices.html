@@ -3,8 +3,6 @@
 
 {% block body %}
 
-
-
 <!-- Button trigger modal -->
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
     Add Device
@@ -72,7 +70,7 @@
 <div>
   
   {%for device in device_list%}
-    <p>{{device.name}} - {{device.ip_address}} - {{device.os}} - {{device.device_user}} - {{device.filepath}} - {{device.ssl_cert}} <button type="button" class="btn btn-secondary">Push Cert</button> <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal{{device.id}}">View</button> <img src="/static/red_x20.png">Cert not in sync </p>
+    <p>{{device.name}} - {{device.ip_address}} - {{device.os}} - {{device.device_user}} - {{device.filepath}} - {{device.ssl_cert}} <button type="button" class="btn btn-secondary">Push Cert</button> <button type="button" class="btn btn-secondary">New Cert</button> <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal{{device.id}}">View</button> <img src="/static/red_x20.png">Cert not in sync </p>
     <div class="modal fade" id="exampleModal{{device.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -82,35 +80,36 @@
           </div>
           <form method="post" enctype=multipart/form-data>
             <div class="modal-body">
+              <input id="{{device.id}}" name="id" hidden="true" value="{{device.id}}">
               <p1>Device Name</p1><br>
-              <input id="device_name" name="device_name" value="{{device.name}}"><br>
+              <input id="device_name_update{{device.id}}" name="device_name_update" value="{{device.name}}"><br>
               <p1>Device IP Address</p1><br>
-              <input id="device_ip" name="device_ip" value="{{device.ip_address}}"><br>
+              <input id="device_ip_update{{device.id}}" name="device_ip_update" value="{{device.ip_address}}"><br>
               <p1>Device Operating System</p1><br>
               
               {% if device.os == "Windows"%}
 
               <div class="form-check">
-                <input class="form-check-input" type="radio" name="flexRadioDefault" id="Windows" value="Windows" checked>
+                <input class="form-check-input" type="radio" name="flexRadioDefault" id="Windows_update{{device.id}}" value="Windows" checked>
                 <label class="form-check-label" for="flexRadioDefault1">
                   Windows
                 </label>
               </div>
               <div class="form-check">
-                <input class="form-check-input" type="radio" name="flexRadioDefault" id="Linux" value="Linux">
+                <input class="form-check-input" type="radio" name="flexRadioDefault" id="Linux_update{{device.id}}" value="Linux">
                 <label class="form-check-label" for="flexRadioDefault2">
                   Linux
                 </label>
               </div>
               {% else %}
               <div class="form-check">
-                <input class="form-check-input" type="radio" name="flexRadioDefault" id="Windows" value="Windows" >
+                <input class="form-check-input" type="radio" name="flexRadioDefault" id="Windows_update{{device.id}}" value="Windows" >
                 <label class="form-check-label" for="flexRadioDefault1">
                   Windows
                 </label>
               </div>
               <div class="form-check">
-                <input class="form-check-input" type="radio" name="flexRadioDefault" id="Linux" value="Linux" checked>
+                <input class="form-check-input" type="radio" name="flexRadioDefault" id="Linux_update{{device.id}}" value="Linux" checked>
                 <label class="form-check-label" for="flexRadioDefault2">
                   Linux
                 </label>
@@ -120,22 +119,20 @@
   
               <p1>Login Credintials</p1><br>
               <label>Username</label><br>
-              <input id="server_user" name="server_user" value="{{device.device_user}}"><br>
+              <input id="server_user_update{{device.id}}" name="server_user_update" value="{{device.device_user}}"><br>
               <label>Password</label><br>
-              <input id="server_password" name="server_password" value="{{device.device_password}}"><br>
+              <input id="server_password_update{{device.id}}" name="server_password_update" value="{{device.device_password}}"><br>
               <br>
               <label>Filepath</label><br>
-              <input id="filepath" name="filepath" value="{{device.filepath}}"><br>
-              <label>SSL Certificate</label>
-              <div class="input-group mb-3">
-                <input type="file" class="form-control" id="crt" name="crt">
-              </div>
+              <input id="filepath_update{{device.id}}" name="filepath_update" value="{{device.filepath}}"><br>
+              <label>SSL Certificate: {{device.ssl_cert}}</label>
+              
   
   
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary">Save changes</button>
+              <button type="button" class="btn btn-primary" onclick="update_devices('{{device.id}}')">Save changes</button>
             </div>
           </form> 
         </div>
