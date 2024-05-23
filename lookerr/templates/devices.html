@@ -52,32 +52,17 @@
               <input type="file" class="form-control" id="crt" name="crt">
             </div>
 
-        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             <button type="submit" class="btn btn-primary">Save changes</button>
+          </div>
         </form> 
-        </div>
       </div>
     </div>
   </div>
+  
 
 
 
@@ -85,11 +70,81 @@
   
 
 <div>
-  {%for device in device_list%}
-    <p>{{device.name}} - {{device.ip_address}} - {{device.os}} - {{device.device_user}} - {{device.filepath}} - {{device.ssl_cert}} <button type="button" class="btn btn-secondary">Push Cert</button> <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">View</button> <img src="/static/red_x20.png">Cert not in sync </p>
   
-    {%endfor%}
+  {%for device in device_list%}
+    <p>{{device.name}} - {{device.ip_address}} - {{device.os}} - {{device.device_user}} - {{device.filepath}} - {{device.ssl_cert}} <button type="button" class="btn btn-secondary">Push Cert</button> <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal{{device.id}}">View</button> <img src="/static/red_x20.png">Cert not in sync </p>
+    <div class="modal fade" id="exampleModal{{device.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Add Device</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <form method="post" enctype=multipart/form-data>
+            <div class="modal-body">
+              <p1>Device Name</p1><br>
+              <input id="device_name" name="device_name" value="{{device.name}}"><br>
+              <p1>Device IP Address</p1><br>
+              <input id="device_ip" name="device_ip" value="{{device.ip_address}}"><br>
+              <p1>Device Operating System</p1><br>
+              
+              {% if device.os == "Windows"%}
+
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="flexRadioDefault" id="Windows" value="Windows" checked>
+                <label class="form-check-label" for="flexRadioDefault1">
+                  Windows
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="flexRadioDefault" id="Linux" value="Linux">
+                <label class="form-check-label" for="flexRadioDefault2">
+                  Linux
+                </label>
+              </div>
+              {% else %}
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="flexRadioDefault" id="Windows" value="Windows" >
+                <label class="form-check-label" for="flexRadioDefault1">
+                  Windows
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="flexRadioDefault" id="Linux" value="Linux" checked>
+                <label class="form-check-label" for="flexRadioDefault2">
+                  Linux
+                </label>
+              </div>
+              {%endif%}
+
+  
+              <p1>Login Credintials</p1><br>
+              <label>Username</label><br>
+              <input id="server_user" name="server_user" value="{{device.device_user}}"><br>
+              <label>Password</label><br>
+              <input id="server_password" name="server_password" value="{{device.device_password}}"><br>
+              <br>
+              <label>Filepath</label><br>
+              <input id="filepath" name="filepath" value="{{device.filepath}}"><br>
+              <label>SSL Certificate</label>
+              <div class="input-group mb-3">
+                <input type="file" class="form-control" id="crt" name="crt">
+              </div>
+  
+  
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Save changes</button>
+            </div>
+          </form> 
+        </div>
+      </div>
+    </div>
+    
+  {%endfor%}
 </div>
+
 
 
 

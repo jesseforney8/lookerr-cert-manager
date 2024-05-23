@@ -29,7 +29,8 @@ def devices():
                 server_pass  = request.form.get("server_password")
                 filepath = request.form.get("filepath")
                 device_cert = request.files["crt"]
-                device_cert.save(f"lookerr/certs/{device_cert.filename}")
+                if device_cert.filename != "":
+                        device_cert.save(f"lookerr/certs/{device_cert.filename}")
         
                 
                 create_device(device_name, device_ip, device_os, server_user, server_pass, filepath, device_cert.filename)
@@ -38,6 +39,7 @@ def devices():
 
         
         device_list = db.session.query(Device).all()
+        
         
                 
 
