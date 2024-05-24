@@ -5,7 +5,7 @@ function update_devices(device_id){
     let server_user = document.getElementById("server_user_update"+ device_id).value;
     let server_pass = document.getElementById("server_password_update"+ device_id).value;
     let filepath = document.getElementById("filepath_update"+ device_id).value;
-    console.log(device_id)
+    
 
 
     if (document.getElementById("Windows_update"+ device_id).checked) {
@@ -28,4 +28,12 @@ function update_devices(device_id){
                 window.location.href = "/devices";
             });
           
-  }
+  };
+
+function new_cert() {
+    document.getElementById("upload_div").style.display = "block";
+    
+    
+
+
+};

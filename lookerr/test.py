@@ -1,8 +1,5 @@
-from database import db, User
+import os
 
 
-user = User(id=1,username="bobby14",email="bobbydoggy@gmail.com")
-
-db.session.add(user)
-db.session.commit()
-print("Done")
+cert_list = os.listdir(os.getcwd() + "/lookerr/certs")
+print(cert_list)

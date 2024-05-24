@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title%} lookerr {% endblock %}
+
+{% block body %}
+
+
+
+
+{{name}}
+<form method="post" action="/devices">
+    {{form.hidden_tag()}}
+
+    {{form.name.label}}
+    {{form.name()}}
+    {{form.submit()}}
+
+
+
+
+
+
+</form>
+
+
+
+{%endblock%}

@@ -16,7 +16,7 @@
           <h1 class="modal-title fs-5" id="exampleModalLabel">Add Device</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <form method="post" enctype=multipart/form-data>
+        <form method="post" enctype=multipart/form-data id="form1">
           <div class="modal-body">
             <p1>Device Name</p1><br>
             <input id="device_name" name="device_name"><br>
@@ -70,7 +70,7 @@
 <div>
   
   {%for device in device_list%}
-    <p>{{device.name}} - {{device.ip_address}} - {{device.os}} - {{device.device_user}} - {{device.filepath}} - {{device.ssl_cert}} <button type="button" class="btn btn-secondary">Push Cert</button> <button type="button" class="btn btn-secondary">New Cert</button> <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal{{device.id}}">View</button> <img src="/static/red_x20.png">Cert not in sync </p>
+    <p>{{device.name}} - {{device.ip_address}} - {{device.os}} - {{device.device_user}} - {{device.filepath}} - {{device.ssl_cert}} <button type="button" class="btn btn-secondary">Push Cert</button> <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModalcert{{device.id}}">New Cert</button> <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal{{device.id}}">View</button> <img src="/static/red_x20.png">Cert not in sync </p>
     <div class="modal fade" id="exampleModal{{device.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -138,6 +138,81 @@
         </div>
       </div>
     </div>
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+    <div class="modal fade" id="exampleModalcert{{device.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">New Certificate</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+
+          <button type="button" onclick="new_cert()">Upload New Certificate</button>
+          <button>Assign Certificate</button>
+
+
+          <div class="new_cert_modal" id="new_cert_modal">
+            <form method="post" enctype=multipart/form-data action="/upload_cert">
+                <input value="{{device.id}}" id="cert_id" >
+                <label >SSL Certificate: {{device.ssl_cert}}</label>
+                <select class="form-select" aria-label="Default select example">
+                  <option selected>Assign Certificate</option>
+                  {% for cert in  cert_list %}
+                  <option value="{{cert}}">{{cert}}</option>
+                  {% endfor %}
+                </select>
+                <div class="input-group mb-3" id="upload_div">
+                  <input type="file" class="form-control" id="new_crt" name="new_crt">
+                </div>
+    
+    
+              
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+          </div> 
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     
   {%endfor%}
 </div>
