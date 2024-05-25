@@ -30,10 +30,26 @@ function update_devices(device_id){
           
   };
 
-function new_cert() {
-    document.getElementById("upload_div").style.display = "block";
+function new_cert(device_id) {
+    document.getElementById("button_group" + device_id).style.display = "none";
+    document.getElementById("new_cert_modal" + device_id).style.display = "block";
     
-    
+};
 
+function select_cert(device_id) {
+    document.getElementById("button_group" + device_id).style.display = "none";
+    document.getElementById("select_cert" + device_id).style.display = "block";
+
+};
+
+function delete_cert(device_id) {
+    document.getElementById("button_group" + device_id).style.display = "none";
+    document.getElementById("delete_cert" + device_id).style.display = "block";
+
+};
+
+function close_modal(div_id, device_id) {
+    document.getElementById(div_id).style.display = "none";
+    document.getElementById("button_group" + device_id).style.display = "block";
 
 };

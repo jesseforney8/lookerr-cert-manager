@@ -95,19 +95,46 @@ def upload_cert():
         if request.method == "POST":
                 device_id = request.form.get("cert_id")
                 device_cert = request.files["new_crt"]
-
+                
                 device = Device.query.get(device_id)
-                if os.path.exists("appt.txt"):
-                        os.remove(f"/looker/certs/{device.ssl_cert}")
-                        device.ssl_cert = device_cert.filename
+              
+                device.ssl_cert = device_cert.filename
+                db.session.commit()
                         
-                        if device_cert.filename != "":
-                                device_cert.save(f"lookerr/certs/{device_cert.filename}")
+                if device_cert.filename != "":
+                        device_cert.save(f"lookerr/certs/{device_cert.filename}")
 
-#new cert button... list of availible certs... option to upload and assign new one
+
 
 
 
         return redirect("/devices")
 
 
+@views.route("/select_cert", methods=["POST"])
+@login_required
+def select_cert():
+        if request.method == "POST":
+                device_id = request.form.get("cert_id")
+                cert_selection = request.form.get("cert_select")
+                device = Device.query.get(device_id)
+                device.ssl_cert = cert_selection
+                db.session.commit()
+
+        return redirect("/devices")
+
+
+
+@views.route("/delete_cert", methods=["POST"])
+@login_required
+def delete_cert():
+        if request.method == "POST":
+                cert_selection = request.form.get("cert_select")
+        # can delete cert that devices already have. need to fix
+                if os.path.exists(os.getcwd() + f"/lookerr/certs/{cert_selection}"):
+                        os.remove(os.getcwd() + f"/lookerr/certs/{cert_selection}")
+                
+                
+                
+
+        return redirect("/devices")
