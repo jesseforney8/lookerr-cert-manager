@@ -130,8 +130,12 @@ def select_cert():
 def delete_cert():
         if request.method == "POST":
                 cert_selection = request.form.get("cert_select")
-        # can delete cert that devices already have. need to fix
+        
                 if os.path.exists(os.getcwd() + f"/lookerr/certs/{cert_selection}"):
+                        device_list = Device.query.filter_by(ssl_cert=cert_selection)
+                        for device in device_list:
+                                device.ssl_cert = ""
+                        db.session.commit()
                         os.remove(os.getcwd() + f"/lookerr/certs/{cert_selection}")
                 
                 
