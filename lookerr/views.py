@@ -6,6 +6,9 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired, IPAddress
 import os
+from ssh_functions import show_dir
+
+
 
 class NamerForm(FlaskForm):
         name = StringField("What's your name?", validators=[DataRequired()])
@@ -29,6 +32,11 @@ views = Blueprint("views", __name__, url_prefix='/views')
 @login_required
 def home():
         return render_template("home.html", user=current_user)
+
+
+
+
+
 
 @views.route("/devices", methods=["POST", "GET"])
 @login_required
@@ -93,19 +101,10 @@ def devices_update():
 @login_required
 def upload_cert():
         if request.method == "POST":
-                device_id = request.form.get("cert_id")
-                device_cert = request.files["new_crt"]
-                
-                device = Device.query.get(device_id)
-              
-                device.ssl_cert = device_cert.filename
-                db.session.commit()
+                device_cert = request.files["upload_cert1"]
                         
                 if device_cert.filename != "":
                         device_cert.save(f"lookerr/certs/{device_cert.filename}")
-
-
-
 
 
         return redirect("/devices")
@@ -140,5 +139,20 @@ def delete_cert():
                 
                 
                 
+
+        return redirect("/devices")
+
+
+@views.route("/cert_check", methods=["POST"])
+@login_required
+def cert_check():
+        if request.method == "POST":
+
+                device_id_json = json.loads(request.data)
+                device_id = device_id_json['id']
+                device = Device.query.get(device_id)
+
+                
+
 
         return redirect("/devices")

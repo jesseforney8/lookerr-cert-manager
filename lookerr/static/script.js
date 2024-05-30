@@ -30,9 +30,9 @@ function update_devices(device_id){
           
   };
 
-function new_cert(device_id) {
+function filepath_select(device_id) {
     document.getElementById("button_group" + device_id).style.display = "none";
-    document.getElementById("new_cert_modal" + device_id).style.display = "block";
+    document.getElementById("filepath_select" + device_id).style.display = "block";
     
 };
 
@@ -52,4 +52,16 @@ function close_modal(div_id, device_id) {
     document.getElementById(div_id).style.display = "none";
     document.getElementById("button_group" + device_id).style.display = "block";
 
+};
+
+
+function cert_check(device_id) {
+    console.log(device_id)
+
+    fetch("/cert_check", {
+        method: "POST",
+        body: JSON.stringify({id: device_id}),
+      }).then((_res) => {
+          window.location.href = "/devices";
+      });
 };

@@ -7,6 +7,9 @@
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
     Add Device
   </button>
+  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#upload_modal">
+   Upload Certificate
+  </button>
   
   <!-- Modal -->
   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -62,6 +65,32 @@
   </div>
   
 
+  <div class="modal fade" id="upload_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Upload Certificate</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+        <form method="post" enctype=multipart/form-data action="/upload_cert">
+          
+          <div class="input-group mb-3">
+            <input type="file" class="form-control" id="upload_cert1" name="upload_cert1">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Save changes</button>
+          </div>
+        </form>
+    </div>
+      </form> 
+    </div>
+  </div>
+</div>
+
+
+
+
 
 
 
@@ -70,7 +99,7 @@
 <div>
   
   {%for device in device_list%}
-    <p>{{device.name}} - {{device.ip_address}} - {{device.os}} - {{device.device_user}} - {{device.filepath}} - {{device.ssl_cert}} <button type="button" class="btn btn-secondary">Push Cert</button> <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModalcert{{device.id}}">Manage Cert</button> <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal{{device.id}}">View</button> <img src="/static/red_x20.png">Cert not in sync </p>
+    <p>{{device.name}} - {{device.ip_address}} - {{device.os}} - {{device.device_user}} - {{device.filepath}} - {{device.ssl_cert}} <button type="button" class="btn btn-secondary" onclick="cert_check('{{device.id}}')">Check Cert</button> <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModalcert{{device.id}}">Manage Cert</button> <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal{{device.id}}">View</button> <img src="/static/red_x20.png">Cert not in sync </p>
     <div class="modal fade" id="exampleModal{{device.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -160,7 +189,7 @@
             
           </div>
           <div id="button_group{{device.id}}">
-            <button type="button" onclick="new_cert('{{device.id}}')">Upload New Certificate</button>
+            <button type="button" onclick="filepath_select('{{device.id}}')">Assign Filepath</button>
             <button type="button" onclick="select_cert('{{device.id}}')">Assign Certificate</button>
             <button type="button" onclick="delete_cert('{{device.id}}')">Delete Certificate</button>
             <div class="modal-footer">
@@ -168,20 +197,18 @@
             </div>
           </div>
 
-          <div class="new_cert_modal" id="new_cert_modal{{device.id}}">
+          <div class="hidden_selection" id="filepath_select{{device.id}}">
             <form method="post" enctype=multipart/form-data action="/upload_cert">
                 <input value="{{device.id}}" id="cert_id" name="cert_id" hidden>
                 <label >SSL Certificate: {{device.ssl_cert}}</label>
-                <div class="input-group mb-3" id="upload_div">
-                  <input type="file" class="form-control" id="new_crt" name="new_crt">
-                </div>
+                
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="close_modal('new_cert_modal{{device.id}}', '{{device.id}}' )">Close</button>
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="close_modal('filepath_select{{device.id}}', '{{device.id}}' )">Close</button>
                   <button type="submit" class="btn btn-primary">Save changes</button>
                 </div>
             </form>
           </div>
-              <div class="select_cert" id="select_cert{{device.id}}">
+              <div class="hidden_selection" id="select_cert{{device.id}}">
                   <form method="post" action="/select_cert">
                     <input value="{{device.id}}" id="cert_id" name="cert_id" hidden>
                     <label>SSL Certificate: {{device.ssl_cert}}</label>
@@ -198,7 +225,7 @@
                   </div>
                 </form>
               </div>
-              <div class="select_cert" id="delete_cert{{device.id}}">
+              <div class="hidden_selection" id="delete_cert{{device.id}}">
                 <form method="post" action="/delete_cert">
                   <input value="{{device.id}}" id="cert_id" name="cert_id" hidden>
                   <label>Delete Certificate</label>
@@ -209,12 +236,12 @@
                     {% endfor %}
                   </select>
                 
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="close_modal('select_cert{{device.id}}', '{{device.id}}')">Close</button>
-                  <button type="submit" class="btn btn-primary">Save changes</button>
-                </div>
-              </form>
-            </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="close_modal('delete_cert{{device.id}}', '{{device.id}}')">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                  </div>
+                </form>
+              </div>
 
 
 
