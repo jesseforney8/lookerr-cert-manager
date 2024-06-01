@@ -24,3 +24,5 @@ class Device(db.Model):
     device_password: Mapped[str]
     filepath: Mapped[str]
     ssl_cert: Mapped[str]
+    sync_status: Mapped[bool]
+    

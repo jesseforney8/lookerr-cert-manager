@@ -65,3 +65,4 @@ function cert_check(device_id) {
           window.location.href = "/devices";
       });
 };
+

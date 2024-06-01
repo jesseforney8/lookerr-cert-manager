@@ -2,29 +2,10 @@ from flask_login import login_user, login_required, logout_user, current_user
 from database import Device, db
 from flask import Flask, redirect, url_for, render_template, Blueprint, request, jsonify, json
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField
-from wtforms.validators import DataRequired, IPAddress
 import os
-from ssh_functions import show_dir
+from ssh_functions import show_dir, check_remote_cert
+from device_functions import create_device
 
-
-
-class NamerForm(FlaskForm):
-        name = StringField("What's your name?", validators=[DataRequired()])
-        submit = SubmitField("Submit")
-
-
-
-
-
-
-
-def create_device(name, ip, os, device_user, device_pass, filepath, cert):
-        new_device = Device(name=name,ip_address=ip,os=os,device_user=device_user,device_password=device_pass,filepath=filepath,ssl_cert=cert)
-        db.session.add(new_device)
-        db.session.commit()
-     
 
 views = Blueprint("views", __name__, url_prefix='/views')
 
@@ -32,11 +13,6 @@ views = Blueprint("views", __name__, url_prefix='/views')
 @login_required
 def home():
         return render_template("home.html", user=current_user)
-
-
-
-
-
 
 @views.route("/devices", methods=["POST", "GET"])
 @login_required
@@ -150,9 +126,14 @@ def cert_check():
 
                 device_id_json = json.loads(request.data)
                 device_id = device_id_json['id']
+
+                filepath = r"C:\Users\Administrator\Documents\test1.cer"
+
                 device = Device.query.get(device_id)
 
-                
+                device.sync_status = check_remote_cert(device.device_user, device.device_password, device.ip_address, filepath)
+
+                db.session.commit()
 
 
         return redirect("/devices")

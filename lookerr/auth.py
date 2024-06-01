@@ -2,12 +2,7 @@ from flask_login import login_user, login_required, logout_user, current_user
 from flask import Flask, redirect, url_for, render_template, Blueprint, request, flash
 from database import User, db
 from werkzeug.security import generate_password_hash, check_password_hash
-
-def create_user(email, password):
-     user = User(email=email, password=generate_password_hash(password, method="scrypt"))
-     db.session.add(user)
-     db.session.commit()
-     
+from device_functions import create_user
 
 
 auth = Blueprint("auth", __name__, url_prefix='/auth')

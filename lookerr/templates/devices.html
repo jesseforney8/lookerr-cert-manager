@@ -99,7 +99,24 @@
 <div>
   
   {%for device in device_list%}
-    <p>{{device.name}} - {{device.ip_address}} - {{device.os}} - {{device.device_user}} - {{device.filepath}} - {{device.ssl_cert}} <button type="button" class="btn btn-secondary" onclick="cert_check('{{device.id}}')">Check Cert</button> <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModalcert{{device.id}}">Manage Cert</button> <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal{{device.id}}">View</button> <img src="/static/red_x20.png">Cert not in sync </p>
+    <div class="device_main_display">
+      <p>{{device.name}} - {{device.ip_address}} - {{device.os}} - {{device.device_user}} - {{device.filepath}} - {{device.ssl_cert}} - {{device.sync_status}} 
+        <button type="button" class="btn btn-secondary" onclick="cert_check('{{device.id}}')">Check Cert</button> 
+        <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModalcert{{device.id}}">Manage Cert</button> 
+        <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal{{device.id}}">View</button>
+        
+        {% if device.sync_status == true %}
+
+        <img src="/static/green_checkmark20.png">Cert in sync
+        
+        {% else %}  
+        
+        <img src="/static/red_x20.png">Cert not in sync
+
+        {%endif%}
+      </p>
+    </div>
+
     <div class="modal fade" id="exampleModal{{device.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
